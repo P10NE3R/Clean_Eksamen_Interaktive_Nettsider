@@ -10,6 +10,18 @@ const book  = {
       validation: Rule => Rule.required()
     },
     {
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        slugify: input => input
+                            .toLowerCase()
+                            .replace(/\s+/g, '-')
+                            .slice(0, 100)
+      }
+    },
+    {
       name: 'author',
       title: 'Author',
       type: 'reference',

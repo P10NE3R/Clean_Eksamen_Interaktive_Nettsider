@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 import Search from './Search';
-import './Layout.css';
+import '../styles/Layout.css';
 
 const Layout = ({ loggedInUser }) => {
   return (

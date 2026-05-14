@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import client from '../../helpers/sanityClient';
 
 const Book = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,8 +11,13 @@ const Book = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const query = `*[_type == "book" && _id == $id]{title, author->{name}, publishedYear, isbn, "coverUrl": cover.asset->url}[0]`;
-        const result = await client.fetch(query, { id });
+        const query = `*[_type == "book" && slug.current == $slug]{
+        title, 
+        author->{name}, 
+        publishedYear, 
+        isbn, 
+        "coverUrl": cover.asset->url}[0]`;
+        const result = await client.fetch(query, { slug });
 
         if (!result) {
           throw new Error('Book not found');
@@ -25,9 +30,8 @@ const Book = () => {
         setLoading(false);
       }
     };
-
     fetchBook();
-  }, [id]);
+  }, [slug]);
 
   if (loading) return <div>Loading book details...</div>;
   if (error) return <div>Error: {error}</div>;

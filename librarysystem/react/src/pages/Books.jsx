@@ -16,6 +16,7 @@ const Books = () => {
           "books": *[_type == "book"]{
             _id,
             title,
+            "slug": slug.current,
             publishedYear,
             isbn,
             "author": author->name,
@@ -78,7 +79,7 @@ const Books = () => {
               alt={`Cover of ${book.title}`}
               style={{ width: 40, height: 60, objectFit: 'cover', verticalAlign: 'middle', marginRight: 8 }}
             />
-            <Link to={`/books/${book._id}`}>
+            <Link to={`/books/${book.slug}`}>
               <strong>{book.title}</strong>
             </Link>{' '}
             {book.borrowed ? (
